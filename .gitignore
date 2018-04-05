@@ -1,0 +1,8 @@
+*.json
+*.zip
+stanford-ner/*
+*.txt
+*.pdf
+*.epub
+*.html
+*.pyc
