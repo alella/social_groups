@@ -1,3 +1,7 @@
+"""
+NOT WORKING ON THIS ANYMORE
+"""
+
 import nltk
 import sys
 from neuralcoref import Coref

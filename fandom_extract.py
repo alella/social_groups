@@ -32,13 +32,17 @@ def search_char(domain,name):
         return {'title':'title','abstract':'abstract','thumbnail':False}
 
 
-def name2json(domain,names):
+def name2json(domain,names,fname):
+    """
+    Takes list of names - people names
+    domain - fandom.wiki domain for names
+    fname - output filename
+
+    Extracts information from fandom pages
+    """
     items = {}
     for name in names: 
         items[name] = search_char(domain,name)
         pprint(items[name])
-    json.dump(items,open(domain+'.json','w'))
+    json.dump(items,open(fname,'w'))
 
-# pprint(search_char("themagicians", "julia"))
-# names = [u'Slytherins', u'Norris', u'Dudley', u'Ravenclaw', 'Nicolas Flamel', u'Fang', 'Seamus Finnigan', u'Ronan', 'Percy Weasley', 'George Weasley', u'Voldemort', 'Albus Dumbledore', u'Potter', u'Petunia', 'Harry Potter', u'Weasley', u'Quirrell', 'Fred Weasley', u'Goyle', u'Crabbe', 'Dedalus Diggle', 'Angelina Johnson', 'Neville Longbottom', u'Bane', u'Norbert', 'Marcus Flint', u'Gringotts', u'Ron', 'Dean Thomas', u'Griphook', u'Slytherin', u'Pomfrey', u'McGonagall', u'Hufflepuff', 'Hermione Granger', u'Vernon', 'Lee Jordan', 'Rubeus Hagrid', u'Malkin', u'Dursley', 'Draco Malfoy', u'Figg', 'Charlie Weasley', u'Snape', 'Oliver Wood', 'Bettie Bott', u'Hooch', u'Flitwick', 'Parvati Patil', u'Ollivander']
-# name2json('harrypotter', names)
