@@ -6,16 +6,16 @@ co_bookname.json: Contains a list of names that co occur, wrt book's chronologic
 Usage: python books2nouns.py /path/to/b_bookname.txt
 """
 
-import sys
-from hashlib import md5
-import json
-import sys
-import nltk
-from pprint import pprint
-from nltk.tag.stanford import StanfordNERTagger as NERTagger
-import urllib
 import os
+import sys
+import json
+import nltk
+import urllib
 import zipfile
+
+from pprint import pprint
+from hashlib import md5
+from nltk.tag.stanford import StanfordNERTagger as NERTagger
 
 def ner_tagger():
     """
