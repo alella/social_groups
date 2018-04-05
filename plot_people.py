@@ -1,7 +1,10 @@
 """
 plot data from <book> using <story_domain>'s fandom.wikia.
 If book filename is b_hp1.txt, <book> = hp, <story_domain> = harrypotter
-Usage: python plot_people.py <book> <story_domain>
+Usage  : python plot_people.py <book> <story_domain>
+Example: python plot_people.py hp1 harrypotter
+
+story_domains:harrypotter,themagicians,gameofthrones
 """
 import os
 import sys
@@ -36,11 +39,13 @@ story_domain=args[2]
 fsize=10
 person_mincount = 7
 perplexity=10
-cooccur='co_'+book+'.json'
-linext = 'linext_'+book+'.json'
-fn_img = 'img_{0}.png'.format(book)
-fn_plot = 'plot_{0}.html'.format(book)
-fn_char_info = 'char_info_{0}.json'.format(book)
+cooccur='cooccurrances/{0}.json'.format(book)
+linext = 'extracts/{0}.json'.format(book)
+fn_img = 'imgs/{0}.png'.format(book)
+fn_plot = 'plots/{0}.html'.format(book)
+fn_char_info = 'char_info/{0}.json'.format(book)
+
+
 # Normalize names
 # If first names starts with any mentioned in non_people then, ignore name
 # If length firstname or last name < 3 then , ignore name

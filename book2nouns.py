@@ -158,8 +158,8 @@ def process_book(fn_book):
         print "Book has to end with .txt and of txt format"
 
     book = fn_book_base[2:].split('.')[0]
-    fn_extract = 'linext_{0}.json'.format(book)
-    fn_cooccer = 'co_{0}.json'.format(book)
+    fn_extract = 'extracts/{0}.json'.format(book)
+    fn_cooccer = 'cooccurrances/{0}.json'.format(book)
     name_map = {}
     ents_map = {}
     coccuer = []
