@@ -11,10 +11,11 @@ Often novels contain numerous characters that frequently associate with others f
 This project focuses on only projecting the characters on a two dimensional plane to recognize clusters visually. Naming the clusters as mentioned above in the list is not possible. Here is one such projection:
 ![](https://s31.postimg.org/h9psx4giz/hp1.png)
 
-More such results can be found in `imgs` folder. Apart from producing static image files, the code can also produce the plots in html pages with more character information like below:
+More such results can be found in `imgs` folder. Apart from producing static image files, the code can also produce interactive plots with more character information like below:
 ![](https://s31.postimg.org/dwhkann0r/scrot_VV0e9.png)
 
-More such html pages can be found in `plots` folder.
+More such interactive plots (html pages) can be found in `plots` folder. The following shows a human annotated version of the results:
+![](https://s31.postimg.org/b8s40gmbf/scroti_K25_G.png)
 
 Instructions to generate graphs
 ===============================
