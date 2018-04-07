@@ -9,7 +9,7 @@ Often novels contain numerous characters that frequently associate with others f
 - etc.
 
 This project focuses on only projecting the characters on a two dimensional plane to recognize clusters visually. Naming the clusters as mentioned above in the list is not possible. Here is one such projection:
-![](https://s31.postimg.org/h9psx4giz/hp1.png)
+![](https://github.com/alella/social_groups/raw/master/imgs/hp1.png)
 
 More such results can be found in [imgs folder](https://github.com/alella/social_groups/tree/master/imgs). Apart from producing static image files, the code can also produce interactive plots with more character information like below:
 ![](https://s31.postimg.org/dwhkann0r/scrot_VV0e9.png)
