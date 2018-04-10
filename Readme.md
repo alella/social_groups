@@ -16,7 +16,7 @@ More such results can be found in [imgs folder](https://github.com/alella/social
 
 More such interactive plots (html pages) can be found in [plots folder](https://github.com/alella/social_groups/tree/master/plots). The following shows a human annotated version of the results:
 ![](https://s31.postimg.org/b8s40gmbf/scroti_K25_G.png)
-
+More annotated results can be found in [annotated folder](https://github.com/alella/social_groups/tree/master/annotated).
 Instructions to generate graphs
 ===============================
 
