@@ -1,7 +1,7 @@
 Social Groups in Novels
 =======================
 
-Often novels contain numerous characters that frequently associate with others forming groups. This project focuses on identifying these social groups. Social groups may be people belonging to the same family, tribe, profession, close friends etc. Results uploaded into this repository mainly focuses on the Harry Potter series so, some of the groups identified involve groups like:
+Novels often contain characters that interact among each other or share chommon characteristics froming social groups. This project focuses on visualizing frequently occuring characters in the prose using an embedding technique called t-SNE (t-Distributed Stochastic Neighbor Embedding). Social groups may be people belonging to the same family, tribe, profession, close friends etc. Results uploaded into this repository mainly focuses on the Harry Potter series so, some of the groups identified involve groups like:
 - Quidditch players
 - Weasley Family members
 - Professors at Hogwarts
@@ -12,7 +12,7 @@ This project focuses on only projecting the characters on a two dimensional plan
 ![](https://github.com/alella/social_groups/raw/master/imgs/hp1.png)
 
 More such results can be found in [imgs folder](https://github.com/alella/social_groups/tree/master/imgs). Apart from producing static image files, the code can also produce interactive plots with more character information like below:
-![](https://s31.postimg.org/dwhkann0r/scrot_VV0e9.png)
+![](https://s31.postimg.cc/nshbbgy4b/scrot_O1_T7i.png)
 
 More such interactive plots (html pages) can be found in [plots folder](https://github.com/alella/social_groups/tree/master/plots). The following shows a human annotated version of the results:
 ![](https://s31.postimg.org/b8s40gmbf/scroti_K25_G.png)
