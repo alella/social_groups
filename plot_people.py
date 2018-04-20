@@ -37,13 +37,14 @@ args = sys.argv
 book=args[1]
 story_domain=args[2]
 fsize=10
-person_mincount = 7
-perplexity=10
+person_mincount = 10
+perplexity=5
 cooccur='cooccurrances/{0}.json'.format(book)
 linext = 'extracts/{0}.json'.format(book)
 fn_img = 'imgs/{0}.png'.format(book)
 fn_plot = 'plots/{0}.html'.format(book)
 fn_char_info = 'char_info/{0}.json'.format(book)
+fn_domain_articles = 'char_info/{0}_articles.json'.format(story_domain)
 
 
 # Normalize names
@@ -51,39 +52,75 @@ fn_char_info = 'char_info/{0}.json'.format(book)
 # If length firstname or last name < 3 then , ignore name
 coc = json.load(open(cooccur))
 coc = ["{0} {1}".format(t[0].lower(),t[1].lower()) for t in coc]
-non_people = ['Aunt', 'Uncle', 'H.', 'Don', 'Yeh', 'Madam']
-removenames=[] 
-for c in coc:
-    f,l = c.split()
-    f=f[0].upper()+f[1:]
+non_people = ['Aunt', 'Uncle', 'H.', 'Don', 'Yeh', 'Madam', 'of', 'professor', 'land', 'the']
+# removenames=[] 
+# for c in coc:
+#     f,l = c.split()
+#     f=f[0].upper()+f[1:]
+#     if f in non_people:
+#         removenames.append(c)
+#     if len(f)<3 or len(l)<3:
+#         removenames.append(c)
+
+# # for first name, last name pairs attach the most common last name to firstname
+# ffnames = {}
+# names = []
+# for n in coc:
+#     f,l = n.split()
+#     ffnames[f] = ffnames.get(f, []) + [l]
+# for k,v in ffnames.iteritems():
+#     names.append("{} {}".format(k,Counter(v).most_common(1)[0][0]))
+
+   
+# print "Names before normalization: ", sorted(list(set(names)))
+# for n in set(removenames):
+#     if n in names:
+#         names.remove(n)
+# nnames={}
+# lnc={} 
+# for n in names:
+#     f,l = n.split()
+#     lnc[l] = lnc.get(l,0) + 1
+# for n in names:
+#     f,l = n.split()
+#     f=f[0].upper()+f[1:]
+#     l=l[0].upper()+l[1:]
+#     nnames[f]="{0} {1}".format(f,l)
+#     if lnc[l.lower()]==1:
+#         nnames[l]="{0} {1}".format(f,l)
+
+# print "Names after normalization: ", sorted(list(set(nnames.values())))
+
+if not os.path.exists(fn_domain_articles):
+    from fandom_extract import fetch_all_article_titles
+    fetch_all_article_titles(story_domain) 
+    
+articles = json.load(open(fn_domain_articles))
+nnames = {}
+cocc = dict(Counter(coc))
+for n in coc:
+    f,l = n.split()
     if f in non_people:
-        removenames.append(c)
-    if len(f)<3 or len(l)<3:
-        removenames.append(c)
+        continue
+    if len(f)<3:
+        continue
+    for a in articles:
+        if f in a.lower().split():
+            nnames[f] = nnames.get(f, set([]))
+            nnames[f].add(a)
+for k,v in nnames.iteritems():
+    article_counts = [(a.lower(),cocc.get(a.lower(),0)) for a in list(v)]
+    article_counts = sorted(article_counts, key=lambda t:-t[1])
+    if article_counts[0][1] >0:
+        nnames[k] = article_counts[0][0]
+    elif len(article_counts)==1:
+        nnames[k] = article_counts[0][0]
+    else:
+        nnames[k] = k
+    nnames[k] = " ".join(["{0}{1}".format(t[0].upper(),t[1:]) for t in nnames[k].split()])
 
-# Get all names with count > 1
-names = [x[0] for x in Counter(coc).iteritems() if x[1]>1]
-print "Names before normalization: ", sorted(list(set(names)))
-for n in set(removenames):
-    if n in names:
-        names.remove(n)
-
-nnames={}
-lnc={}
-for n in names:
-    f,l = n.split()
-    lnc[l] = lnc.get(l,0) + 1
-for n in names:
-    f,l = n.split()
-    f=f[0].upper()+f[1:]
-    l=l[0].upper()+l[1:]
-    nnames[f]="{0} {1}".format(f,l)
-    if lnc[l.lower()]==1:
-        nnames[l]="{0} {1}".format(f,l)
-
-print "Names after normalization: ", sorted(list(set(nnames.values())))
-
-
+print "Name Normalization:"
+pprint(nnames)
 linext = json.load(open(linext))
 assocs = {}                     # nouns associated with <person>
 ents = {}                       # entities associated with <person>
@@ -95,22 +132,22 @@ for line in linext.values():
     for person in people:
         if person in non_people:
             continue
-        person = nnames.get(person,person)
+        person = nnames.get(person.lower(),person)
         assocs[person] = assocs.get(person,[]) + [t.lower() for t in nouns]
         ents[person] = line['ents']
         namecnt[person] = namecnt.get(person, 0)+1
 
 # Build features
 main_char = sorted(namecnt.iteritems(), key=lambda x:-x[1])[0][0]
-features = []
-ksize=5
+features = [] 
+ksize=5 
 for person in assocs.keys():
     if namecnt[person]<person_mincount:
         continue
     features += [x[0] for x in Counter(assocs[person]).most_common(fsize)]
     features += ents[person]
     
-print "features from each character =", fsize
+print "Features from each character =", fsize
 print "Minimum person count  =", person_mincount
 print "Lenght of feature vector =", len(set(features))
 
@@ -133,7 +170,8 @@ def prcl(people,preds):
     """
     K = list(set(preds))
     for k in range(len(K)):
-        print [people[i] for i in range(len(people)) if preds[i]==k]
+        cnames = [people[i] for i in range(len(people)) if preds[i]==k]
+        print "Cluster {0}:".format(k), ",".join(cnames)
     
     
 features = list(set(features))
@@ -152,7 +190,7 @@ X = X[1:]
 
 clf = AffinityPropagation()
 clf.fit(X)
-print "affprop"
+print "Clusters extracted using Affinity Propagation:"
 prcl(peps,clf.predict(X))
 print "--"*20
 
@@ -170,7 +208,7 @@ for i,el in enumerate(X):
         plt.text(x,y,s,fontsize=6,alpha=.6)
     plt.scatter(x,y,s=10,linewidth=0,alpha=1,c='#4286f4')
 plt.savefig('img.png',dpi=100,facecolor=facecolor) 
-plt.savefig(fn_img,dpi=300,facecolor=facecolor) 
+plt.savefig(fn_img,dpi=300,facecolor=facecolor)  
 
  
 
@@ -226,4 +264,8 @@ with open(fn_plot, 'w') as w:
     w.write(content)
     
 webbrowser.open(fn_plot)
- 
+
+
+
+
+
