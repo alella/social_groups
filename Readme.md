@@ -1,7 +1,7 @@
 Social Groups in Novels
 =======================
 
-Novels often contain characters that interact among each other or share chommon characteristics froming social groups. This project focuses on visualizing frequently occuring characters in the prose using an embedding technique called t-SNE (t-Distributed Stochastic Neighbor Embedding). Social groups may be people belonging to the same family, tribe, profession, close friends etc. Results uploaded into this repository mainly focuses on the Harry Potter series so, some of the groups identified involve groups like:
+Novels often contain characters that interact among each other or share common characteristics forming social groups. This project focuses on visualizing frequently occurring characters in the prose using an embedding technique called t-SNE (t-Distributed Stochastic Neighbor Embedding). Social groups may be people belonging to the same family, tribe, profession, close friends etc. Results uploaded into this repository mainly focuses on the Harry Potter series so, some of the groups identified involve groups like:
 - Quidditch players
 - Weasley Family members
 - Professors at Hogwarts
