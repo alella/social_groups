@@ -61,8 +61,7 @@ def fetch_all_article_titles(domain):
         if 'offset' not in r:
             break
         offset = r['offset']
-        offset = offset.replace(u"´", "").replace(u"ü", "").replace(u"№", "").replace(u"’", "")
-        offset = urllib.quote_plus(offset)
+        offset = urllib.quote_plus(offset.encode('utf8'))
         print "articles =", len(article_titles), offset
 
     json.dump(article_titles,open(fname,'w'))

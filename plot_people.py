@@ -207,7 +207,7 @@ for i,el in enumerate(X):
     else:
         plt.text(x,y,s,fontsize=6,alpha=.6)
     plt.scatter(x,y,s=10,linewidth=0,alpha=1,c='#4286f4')
-plt.savefig('img.png',dpi=100,facecolor=facecolor) 
+plt.savefig('img.png',dpi=200,facecolor=facecolor) 
 plt.savefig(fn_img,dpi=300,facecolor=facecolor)  
 
  
